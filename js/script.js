@@ -5,7 +5,6 @@
 // con difficoltà 1 => tra 1 e 100
 // con difficoltà 2 => tra 1 e 81
 // con difficoltà 3 => tra 1 e 49
-
 document.getElementById("play").addEventListener("click", startGame);
 
 function startGame() {
@@ -18,10 +17,20 @@ function startGame() {
     const genGridContainer = document.getElementById("grid");
     genGridContainer.classList.add("grid-container");
 
-    // 1 - Choose to generate numbers from 1 to 100, then pass the function "genGridNumb" to pass the array
-    const gridSize = 100;
-    const gridArray = genGridNumb(gridSize);
+    // Declare a variable for the difficulty chosen
+    let difficulty = document.getElementById("difficulty").value;
+    console.log(difficulty);
 
+    // 1 - Choose to generate numbers, then pass the function "genGridNumb" to pass the array
+    let gridSize;
+    if (difficulty == "easy") {
+        gridSize = 100;
+    } else if (difficulty == "medium") {
+        gridSize = 81;
+    } else if (difficulty == "hard") {
+        gridSize = 49;
+    }
+    let gridArray = genGridNumb(gridSize);
 
     // 2 - Each number of the array creates a grid cell and if the user click on a cell it gets painted
     const gridContainer = document.getElementById("grid");
@@ -29,24 +38,35 @@ function startGame() {
 
     for (let i = 0; i < gridArray.length; i++) {
         const thisNumber = gridArray[i];
+        let domElement;
 
-        const domElement = genGridCell(thisNumber)
-
-        domElement.addEventListener("click", function() {
-            this.classList.add("active");
-        });
-
-        gridContainer.append(domElement);
+        if (difficulty == "easy") {
+            let domElement = genGridCellEasy(thisNumber)
+            domElement.addEventListener("click", function() {
+                this.classList.add("active");
+            });
+            gridContainer.append(domElement);
+        } else if (difficulty == "medium") {
+            let domElement = genGridCellMedium(thisNumber)
+            domElement.addEventListener("click", function() {
+                this.classList.add("active");
+            });
+            gridContainer.append(domElement);
+        } else if (difficulty == "hard") {
+            let domElement = genGridCellHard(thisNumber)
+            domElement.addEventListener("click", function() {
+                this.classList.add("active");
+            });
+            gridContainer.append(domElement);
+        }  
     }
 }
-
-
 
 // FUNCTIONS
 /**
  * Description -> Creates an array necessary to create the grid used to play the game
- * @param {integer} gridNumbCount -> Used to pass the value choosen in the function "startGame" to the max of the array described in this function
- * @returns {array} -> Returns an array from 1 to a number choosen in the function "startGame"
+ * @param {integer} gridNumbCount -> Used to pass the value chosen in the function "startGame" to the max of the array described in this function
+ * @returns {array} -> Returns an array from 1 to a number chosen in the function "startGame"
  */
 
 function genGridNumb(gridNumbCount) {
@@ -59,17 +79,49 @@ function genGridNumb(gridNumbCount) {
 }
 
 /**
- * Description -> Creates the cells contained inside the grid
+ * Description -> Creates the cells contained inside the grid (EASY - 100 cells)
  * @param {Integer} number -> Used to pass the numbers in the array used by the function "startGame" to the span elements inside the grid
  * @returns {html-element} -> Returns the code to create span elements to generate grid cells in html
  */
 
-function genGridCell(number) {
+function genGridCellEasy(number) {
     const newElement = document.createElement("div");
 
     newElement.innerHTML = `<span>${number}</span>`
 
-    newElement.classList.add("grid-item");
+    newElement.classList.add("grid-item-easy");
+
+    return newElement;
+}
+
+/**
+ * Description -> Creates the cells contained inside the grid (MEDIUM - 81 cells)
+ * @param {Integer} number -> Used to pass the numbers in the array used by the function "startGame" to the span elements inside the grid
+ * @returns {html-element} -> Returns the code to create span elements to generate grid cells in html
+ */
+
+ function genGridCellMedium(number) {
+    const newElement = document.createElement("div");
+
+    newElement.innerHTML = `<span>${number}</span>`
+
+    newElement.classList.add("grid-item-medium");
+
+    return newElement;
+}
+
+/**
+ * Description -> Creates the cells contained inside the grid (HARD - 49 cells)
+ * @param {Integer} number -> Used to pass the numbers in the array used by the function "startGame" to the span elements inside the grid
+ * @returns {html-element} -> Returns the code to create span elements to generate grid cells in html
+ */
+
+ function genGridCellHard(number) {
+    const newElement = document.createElement("div");
+
+    newElement.innerHTML = `<span>${number}</span>`
+
+    newElement.classList.add("grid-item-hard");
 
     return newElement;
 }

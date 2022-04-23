@@ -81,9 +81,7 @@ main > h2 {
     align-content: flex-start;
 }
 
-.grid-item {
-    width: calc(100% / 10);
-    height: calc(100% / 10);
+.grid-item-easy, .grid-item-medium, .grid-item-hard {
     border: 1px solid white;
     color: white;
     display: flex;
@@ -91,7 +89,21 @@ main > h2 {
     align-items: center;
 }
 
-.grid-item.active {
+.grid-item-easy {
+    width: calc(100% / 10);
+    height: calc(100% / 10);
+}
+
+.grid-item-medium {
+    width: calc(100% / 9);
+    height: calc(100% / 9);
+}
+.grid-item-hard {
+    width: calc(100% / 7);
+    height: calc(100% / 7);
+}
+
+.grid-item-easy.active, .grid-item-medium.active, .grid-item-hard.active {
     background-color: #6596ee;
 }
 
